@@ -1,7 +1,5 @@
 import pygame
 from random import randint
-
-from pygame.version import ver
 from piece import Piece
 from Jeu import Jeu
 from math import sqrt
@@ -25,8 +23,8 @@ class affichage:
         self.I = [[0,2,0,0,2,0,0,2,0],[0,0,0,2,2,2,0,0,0],[0,2,0,0,2,0,0,2,0],[0,0,0,2,2,2,0,0,0]]
         self.T = [[0,0,0,4,4,4,0,4,0],[0,4,0,0,4,4,0,4,0],[0,4,0,4,4,4,0,0,0],[0,4,0,4,4,0,0,4,0]]
         self.J = [[0,0,0,5,5,5,0,0,5],[0,5,0,0,5,0,5,5,0],[5,0,0,5,5,5,0,0,0],[0,5,5,0,5,0,0,5,0]]
-        self.L = [[0,0,0,6,6,6,6,0,0],[0,6,0,0,6,0,0,6,6],[6,0,0,6,6,6,0,0,0],[6,6,0,0,6,0,0,6,0]]
-        self.Z = [[0,0,0,8,8,0,0,8,8],[0,8,0,8,8,0,0,8,8],[0,0,0,8,8,0,0,8,8],[0,8,0,8,8,0,0,8,8]]
+        self.L = [[0,0,0,6,6,6,6,0,0],[0,6,0,0,6,0,0,6,6],[0,0,6,6,6,6,0,0,0],[6,6,0,0,6,0,0,6,0]]
+        self.Z = [[0,0,0,8,8,0,0,8,8],[0,8,0,8,8,0,8,0,0],[0,0,0,8,8,0,0,8,8],[0,8,0,8,8,0,8,0,0]]
         self.S = [[0,0,0,0,7,7,7,7,0],[7,0,0,7,7,0,0,7,0],[0,0,0,0,7,7,7,7,0],[7,0,0,7,7,0,0,7,0]]
         self.O = [[3,3,0,3,3,0,0,0,0],[3,3,0,3,3,0,0,0,0],[3,3,0,3,3,0,0,0,0],[3,3,0,3,3,0,0,0,0]]
         #initialisation des pieces du jeu
@@ -39,6 +37,7 @@ class affichage:
         self.P_O = Piece(self.O)
         #initialisation du visuel
         self.surface = pygame.display.set_mode((self.LONGUEUR_FENETRE, self.LARGEUR_FENETRE))
+        self.nom_fenetre = pygame.display.set_caption('Tetris')
         self.gris = pygame.image.load('../cases/grey.png').convert_alpha()
         self.rouge = pygame.image.load('../cases/red.png').convert_alpha()
         self.vert = pygame.image.load('../cases/green.png').convert_alpha()
@@ -51,8 +50,7 @@ class affichage:
         self.liste_couleurs = self.liste_des_couleurs()
         #autre
         self.gameplay = Jeu()
-        self.piece = []
-        self.choisir_piece()
+        self.piece = Piece([])
 
     def initialisation_de_la_grille(self):
         """ permet l'initialisation de la grille
@@ -60,6 +58,12 @@ class affichage:
         :rtype: List[List[int]] """
         return [[1 if i in (self.MIN_GRILLE, self.MAX_GRILLE_L-1)  or j in (self.MIN_GRILLE, self.MAX_GRILLE_H - 1) \
             else 0 for i in range(self.MAX_GRILLE_L)] for j in range(self.MAX_GRILLE_H)]
+
+    def reparer_grille(self):
+        for l in range(len(self.grille)):
+            for c in range(len(self.grille[0])):
+                if l in (self.MIN_GRILLE, self.MAX_GRILLE_H-1) or c in(self.MIN_GRILLE, self.MAX_GRILLE_L-1):
+                    self.grille[l][c] = 1
 
     def liste_des_couleurs(self):
         """ permet de lister les couleurs des pieces, l'index reference 
@@ -81,9 +85,9 @@ class affichage:
 
         if self.piece != []:
             while liste_piece[index_piece] == self.piece:
-                index_piece = randint(0, len(self.liste_des_pieces()))
-                self.piece = liste_piece[index_piece]
-        else: self.piece = liste_piece[index_piece]
+                index_piece = randint(0, len(self.liste_des_pieces())-1)
+            self.piece = liste_piece[index_piece]
+
     def affichage_de_la_grille(self):
         """ permet d'afficher la grille """
         blanc = (255,255,255)
@@ -94,16 +98,15 @@ class affichage:
                 carre = self.liste_couleurs[couleur].copy()
                 self.surface.blit(carre, (c*30, l*30))
 
-    def effacer_piece(self, piece: Piece):
+    def effacer_piece(self, piece, tableau):
         """ permet de 'nettoyer' la surface sur laquelle une pièce 
         a été avant de potentiellement la bouger vers un autre endroit (ou la pivoter). 
         :param piece : matrice de la pièce qu'on souhaite effacer
         :type piece : Piece """
-        for i in range(len(piece)):
-            if piece[i] != 0:
-                horizontal, vertical = (i % sqrt(len(piece)) + piece.x), (i // sqrt(len(piece)) + piece.y)
+        for i in range(len(tableau)):
+            if tableau[i] != 0:
+                horizontal, vertical = (i % int(sqrt(len(tableau))) + piece.x), (i // int(sqrt(len(tableau))) + piece.y)
                 self.grille[vertical][horizontal] = 0
-
 
     def afficher_piece(self, piece, tableau):
         """ permet d'afficher la pièce à un endroit de la surface 
@@ -114,9 +117,8 @@ class affichage:
             if tableau[i] != 0:
                 horizontal, vertical = (i % int(sqrt(len(tableau))) + piece.x), ((i // int(sqrt(len(tableau)))) + piece.y)
                 self.grille[vertical][horizontal] = tableau[i]
-                print(horizontal, vertical)
 
-    def peut_bouger_piece(self, x: int, y: int, piece: Piece):
+    def peut_bouger_piece(self, x: int, y: int, tableau: list):
         """ renvoie vrai ou faux en fonction de la capacité
         d'afficher la piece en argument dans la grille de jeu 
         :param x : index horizontal de la piece 
@@ -126,15 +128,44 @@ class affichage:
         :type y : int
         :type piece : Piece
         """
-        for i in range(len(piece)):
-            if piece[i] != 0:
-                horizontal, vertical = (i % sqrt(len(piece)) + x), (i // sqrt(len(piece)) + y)
-                if self.grille[vertical][horizontal] != 0: return False
+        for i in range(len(tableau)):
+            if tableau[i] != 0:
+                horizontal, vertical = (i % int(sqrt(len(tableau))) + x), (i // int(sqrt(len(tableau))) + y)
+                if self.grille[vertical][horizontal] != 0: 
+                    if self.grille[vertical][horizontal] == 1:
+                            return False
+                    else: return False
         return True
 
     def spawn_piece(self):
-        """ permet de faire spawn une nouvelle pièce lorsque la derniere est place """
-        self.choisir_piece()
-        self.piece.x, self.piece.y = 0,0
-        tab = self.piece.tableau[self.piece.num_tableau]
-        self.afficher_piece(self.piece, tab)
+        """ permet de faire spawn une nouvelle pièce lorsque la derniere est place 
+        :todo :: permettre de changer l'axe des abscisses si jamais la valeur par
+        defaut n'est pas disponible pour le placement de la piece du Tetris. """
+        if self.piece.x != -1:
+            tab = self.piece.tableau[self.piece.num_tableau]
+            self.afficher_piece(self.piece, tab)
+
+    def ligne_pleine(self, nombre):
+        """ permet de savoir si une ligne est pleine ou non
+        :args : None 
+        :return : ligne pleine ou non
+        :rtype : bool """
+        return not 0 in self.grille[nombre]
+
+    def destruction_de_la_ligne(self, nombre):
+        """ permet de détruire / initialiser les lignes de la grille de jeu """
+        self.grille[nombre] = [1 if i in (self.MIN_GRILLE, self.MAX_GRILLE_L-1) else 0 for i in range(len(self.grille[nombre]))]
+
+    def recuperer_la_ligne_du_dessus(self, nombre):
+        """ permet de faire descendre la grille lorsqu'une ligne de cette 
+        derniere aura été détruite car elle aura été pleine d'autres cases """
+        self.grille[nombre] = self.grille[nombre-1].copy()
+
+    def placer_piece(self):
+        """ permet de faire spawn une piece sur un axe horizontal
+        particulier en fonction de remplissage de la grille du jeu """
+        self.piece.initialiser_position()
+        for i in range(0,len(self.grille[0])-3):
+            if self.peut_bouger_piece(i,1,self.piece.get_tab_with_index()):
+                self.piece.x = i
+                break
