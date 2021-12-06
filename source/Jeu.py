@@ -1,5 +1,4 @@
 from typing import List
-from piece import Piece
 
 class Jeu:
     """ permet de reunir en une classe 
@@ -8,4 +7,8 @@ class Jeu:
         """ initialisation du jeu """
         self.game_running = True
         self.isDown = False
+        self.isInGame = True
+        self.isGamePaused = False
         self.Touches = list()
+        self.compteur = 0
+        self.vitesse = 60
