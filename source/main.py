@@ -1,9 +1,9 @@
 import pygame, sys
 from pygame.locals import *
 from Affichage import affichage
-from Jeu import Jeu
 
 Tetris = affichage()
+Tetris.gameplay.chargerDonnees()
 
 #boucle du jeu
 while Tetris.gameplay.game_running:
@@ -12,6 +12,7 @@ while Tetris.gameplay.game_running:
     #gestion des evenements
     for event in pygame.event.get():
         if event.type == QUIT:
+            Tetris.gameplay.sauvegarder_les_donnees()
             Tetris.gameplay.game_running = False
         elif event.type == KEYDOWN and event.key not in Tetris.gameplay.Touches:
             Tetris.gameplay.Touches.append(event.key)
@@ -59,6 +60,7 @@ while Tetris.gameplay.game_running:
                 Tetris.effacer_piece(Tetris.piece, Tetris.piece.get_tab_with_index())
                 while (Tetris.peut_bouger_piece(Tetris.piece.x, Tetris.piece.y + 1, Tetris.piece.get_tab_with_index())):
                     Tetris.piece.descendre()
+                    Tetris.gameplay.augmenterScore()
                 Tetris.afficher_piece(Tetris.piece, Tetris.piece.get_tab_with_index())
 
         if not K_DOWN in Tetris.gameplay.Touches: Tetris.gameplay.vitesse = 60
@@ -68,6 +70,7 @@ while Tetris.gameplay.game_running:
                     Tetris.effacer_piece(Tetris.piece, Tetris.piece.get_tab_with_index())
                     if Tetris.peut_bouger_piece(Tetris.piece.x, Tetris.piece.y+1, Tetris.piece.get_tab_with_index()):
                         Tetris.piece.descendre()
+                        Tetris.gameplay.augmenterScore()
                         Tetris.afficher_piece(Tetris.piece, Tetris.piece.get_tab_with_index())
                     else: 
                         Tetris.afficher_piece(Tetris.piece, Tetris.piece.get_tab_with_index())
@@ -81,6 +84,9 @@ while Tetris.gameplay.game_running:
                     if Tetris.piece.x != -1:  
                         Tetris.spawn_piece()
                     else: 
+                        print(Tetris.gameplay.score)
+                        Tetris.gameplay.changerMeilleurScore()
+                        Tetris.gameplay.sauvegarder_les_donnees()
                         Tetris.gameplay.isInGame = False
                 else:
                     Tetris.choisir_piece()
