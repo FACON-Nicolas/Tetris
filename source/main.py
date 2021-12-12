@@ -1,29 +1,52 @@
 import pygame, sys
 from pygame.locals import *
+import pygame_gui
 from Affichage import affichage
 
 Tetris = affichage()
-Tetris.gameplay.chargerDonnees()
+Tetris.infos.highScoreText.set_text("highScore: " + str(Tetris.gameplay.meilleurScore))
 
 #boucle du jeu
 while Tetris.gameplay.game_running:
     #gestion du nombre de frames
     Tetris.CLOCK.tick(60)
+    time_delta = 1
     #gestion des evenements
     for event in pygame.event.get():
         if event.type == QUIT:
             Tetris.gameplay.sauvegarder_les_donnees()
             Tetris.gameplay.game_running = False
+
         elif event.type == KEYDOWN and event.key not in Tetris.gameplay.Touches:
             Tetris.gameplay.Touches.append(event.key)
+
         elif event.type == KEYUP and event.key in Tetris.gameplay.Touches:
             Tetris.gameplay.Touches.remove(event.key)
             Tetris.gameplay.isDown = False
 
+        elif event.type == pygame.USEREVENT:
+            if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == Tetris.infos.pause_button:
+                    Tetris.gameplay.isGamePaused = not Tetris.gameplay.isGamePaused
+                    if Tetris.gameplay.isGamePaused: pygame.mixer.music.pause()
+                    else: pygame.mixer.music.unpause()
+                elif event.ui_element in (Tetris.pause.quit_button, Tetris.end.quit_button):
+                    Tetris.gameplay.game_running = False
+                elif event.ui_element == Tetris.pause.resume_button:
+                    Tetris.gameplay.isGamePaused = False
+                elif event.ui_element == Tetris.end.restart_button:
+                    Tetris.__init__()
+
+        Tetris.infos.manager.process_events(event)
+        Tetris.pause.pause_manager.process_events(event)
+        Tetris.infos.unpause_manager.process_events(event)
+        Tetris.end.manager.process_events(event)
     #si la touche echap est pressee
-    if K_ESCAPE in Tetris.gameplay.Touches and not Tetris.gameplay.isDown:
+    if (K_ESCAPE in Tetris.gameplay.Touches) and not(Tetris.gameplay.isDown) and (Tetris.gameplay.isInGame):
         Tetris.gameplay.isDown = True
         Tetris.gameplay.isGamePaused = not Tetris.gameplay.isGamePaused
+        if Tetris.gameplay.isGamePaused: pygame.mixer.music.pause()
+        else: pygame.mixer.music.unpause()        
 
     if not Tetris.gameplay.isGamePaused:
         #si aucune touche n'est pressee     
@@ -93,12 +116,32 @@ while Tetris.gameplay.game_running:
                     Tetris.placer_piece()
                     Tetris.grille = Tetris.initialisation_de_la_grille()
                     Tetris.spawn_piece()
+        Tetris.infos.unpause_manager.update(time_delta)
+        Tetris.infos.unpause_manager.draw_ui(Tetris.surface)
         #Mise a jour du compteur permettant de contrôler la vitesse de déplacement d'une piece
         Tetris.gameplay.compteur += 1
         #mise à jour du jeu    
-
         Tetris.reparer_grille()
         Tetris.affichage_de_la_grille()
+        Tetris.infos.scoreText.set_text("score: " + str(Tetris.gameplay.score))
+        Tetris.infos.manager.update(time_delta)
+        Tetris.infos.manager.draw_ui(Tetris.surface)
+        Tetris.infos.unpause_manager.update(time_delta)
+        Tetris.infos.unpause_manager.draw_ui(Tetris.surface)
+    elif Tetris.gameplay.isGamePaused:
+        Tetris.pause.pause_manager.update(time_delta)
+        Tetris.pause.pause_manager.draw_ui(Tetris.surface)
+        gamePaused = pygame.font.SysFont('Arial', 60, bold=True)
+        text = gamePaused.render('GAME PAUSED',True, (255,255,255))
+        Tetris.surface.blit(text, (525,50))
+    if not Tetris.gameplay.isInGame:
+        Tetris.end.scoreText.set_text("score: " + str(Tetris.gameplay.score))
+        Tetris.end.highScoreText.set_text("highScore: " + str(Tetris.gameplay.meilleurScore))
+        Tetris.end.manager.update(time_delta)
+        Tetris.end.manager.draw_ui(Tetris.surface)
+        gameOver = pygame.font.SysFont('Arial', 60, bold=True)
+        textOver = gameOver.render('GAME OVER',True, (255,255,255))
+        Tetris.surface.blit(textOver, (575,50))
     #mise à jour de l'ecran
     pygame.display.flip()
 #fin de la boucle -> fin du programme.
