@@ -1,8 +1,10 @@
 import pygame
+from GUI import *
 from random import randint
 from piece import Piece
 from Jeu import Jeu
 from math import sqrt
+from audio import sound
 
 class affichage:
     """ permet de gerer les différents cas d'affichage des programmes """
@@ -10,6 +12,7 @@ class affichage:
     def __init__(self):
         """ initialisation de la classe 'Affichage' """
         pygame.init()
+        self.gameplay = Jeu()
         #initialisation des constantes
         self.MIN_GRILLE = 0
         self.MAX_GRILLE_H = 22
@@ -38,19 +41,23 @@ class affichage:
         #initialisation du visuel
         self.surface = pygame.display.set_mode((self.LONGUEUR_FENETRE, self.LARGEUR_FENETRE))
         self.nom_fenetre = pygame.display.set_caption('Tetris')
-        self.gris = pygame.image.load('../cases/grey.png').convert_alpha()
-        self.rouge = pygame.image.load('../cases/red.png').convert_alpha()
-        self.vert = pygame.image.load('../cases/green.png').convert_alpha()
-        self.noir = pygame.image.load('../cases/black.png').convert_alpha()
-        self.jaune = pygame.image.load('../cases/yellow.png').convert_alpha()
-        self.orange = pygame.image.load('../cases/orange.png').convert_alpha()
-        self.violet = pygame.image.load('../cases/purple.png').convert_alpha()
-        self.bleu_clair = pygame.image.load('../cases/sky_blue.png').convert_alpha()
-        self.bleu_fonce = pygame.image.load('../cases/dark_blue.png').convert_alpha()
+        self.gris = pygame.image.load(self.gameplay.path+'images\\grey.png').convert_alpha()
+        self.rouge = pygame.image.load(self.gameplay.path+'images\\red.png').convert_alpha()
+        self.vert = pygame.image.load(self.gameplay.path+'images\\green.png').convert_alpha()
+        self.noir = pygame.image.load(self.gameplay.path+'images\\black.png').convert_alpha()
+        self.jaune = pygame.image.load(self.gameplay.path+'images\\yellow.png').convert_alpha()
+        self.orange = pygame.image.load(self.gameplay.path+'images\\orange.png').convert_alpha()
+        self.violet = pygame.image.load(self.gameplay.path+'images\\purple.png').convert_alpha()
+        self.bleu_clair = pygame.image.load(self.gameplay.path+'images\\sky_blue.png').convert_alpha()
+        self.bleu_fonce = pygame.image.load(self.gameplay.path+'images\\dark_blue.png').convert_alpha()
         self.liste_couleurs = self.liste_des_couleurs()
-        #autre
-        self.gameplay = Jeu()
+        #gameplay
         self.piece = Piece([])
+        self.son = sound()
+        #GUIs
+        self.infos = GUI_UnPause(self.LONGUEUR_FENETRE, self.LARGEUR_FENETRE, self.gameplay)
+        self.pause = GUI_Pause(self.LONGUEUR_FENETRE, self.LARGEUR_FENETRE)
+        self.end = GUI_GameOver(self.LONGUEUR_FENETRE, self.LARGEUR_FENETRE, self.gameplay)
 
     def initialisation_de_la_grille(self):
         """ permet l'initialisation de la grille
@@ -90,8 +97,8 @@ class affichage:
 
     def affichage_de_la_grille(self):
         """ permet d'afficher la grille """
-        blanc = (255,255,255)
-        self.surface.fill(blanc)
+        couleur = (50,50,50)
+        self.surface.fill(couleur)
         for c in range(len(self.grille[0])):
             for l in range(len(self.grille)):
                 couleur = self.grille[l][c]
