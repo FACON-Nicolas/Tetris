@@ -1,4 +1,3 @@
-from typing import List
 import os, json
 
 class Jeu:
@@ -6,6 +5,7 @@ class Jeu:
      des fonctionnalites du Tetris """
     def __init__(self):
         """ initialisation du jeu """
+        self.path = "C:\\Users\\" + os.environ['USERNAME'] +'\\Documents\\Tetris\\'
         self.game_running = True
         self.isDown = False
         self.isInGame = True
@@ -17,7 +17,7 @@ class Jeu:
         self.fichier = "../save.json"
         self.donnees = self.ouvrirJson()
         self.meilleurScore = 0
-        self.nom = ""
+        self.chargerDonnees()
 
     def augmenterScore(self):
         """ permet d'augmenter le score du joueur """
@@ -34,7 +34,6 @@ class Jeu:
         """ permet de charger le meilleurScore """
         if not self.donnees == {}:
             self.meilleurScore = self.donnees['highScore']
-            self.nom = self.donnees['nickName']
 
     def ouvrirJson(self):
         """ permet de charger un fichier stocké en json """
@@ -42,12 +41,11 @@ class Jeu:
             with open(self.fichier) as open_json:
                 data_dict = json.load(open_json)
         else:
-            data_dict = {'highScore': 0, 'nickName': ''}
+            data_dict = {'highScore': 0}
         return data_dict
 
     def sauvegarder_les_donnees(self):
         """ permet de sauvegarder les donnees d'un utilisateur """
         self.donnees['highScore'] = self.meilleurScore
-        self.donnees['nickName'] = self.nom
         with open(self.fichier, 'w') as f:    
             j = json.dump(self.donnees, f)
