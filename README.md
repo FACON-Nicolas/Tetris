@@ -8,3 +8,11 @@
 + put the externals files (sound, img, others) in `` C:\Users\{your name}\Documents\Tetris\ `` ( ``images\`` for images and ``audio\`` for sounds)
 
 ## Keys :
+| Keys  | Actions |
+| ------|---------|
+| UP    | pivot piece |
+| DOWN  | go down piece |
+| RIGHT | move right piece |
+| LEFT  | move left piece |
+| SPACE | place piece |
+| ESCAPE | Pause / Resume |
