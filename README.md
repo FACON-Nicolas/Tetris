@@ -1,6 +1,6 @@
 # <p align="center">Tetris</p>
 
-<p align="center"><img src="images/Tetris.png" alt="" width="800"></p>
+<p align="center"><img src="images/tetris.png" alt="" width="800"></p>
 
 ## Prerequisite :
 + possess Windows 10
