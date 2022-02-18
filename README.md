@@ -25,15 +25,39 @@ Pre-requisites
 + get the lastest version of pygame_gui ( ``py -3.7 -m pip install pygame_gui`` )
 
 <h1 align="center" id="keys"> Keys </h1>
- 
-| Keys  | Actions |
-| ------|---------|
-| UP    | pivot piece |
-| DOWN  | go down piece |
-| RIGHT | move right piece |
-| LEFT  | move left piece |
-| SPACE | place piece |
-| ESCAPE | Pause / Resume |
+
+<table align="center">
+ <thead>
+  <tr>
+   <th><b>Keys</b></th>
+   <th><b>Actions</b></th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td align="center">UP</td>
+   <td align="center">rotate piece</td>
+  </tr>
+  <tr>
+   <td align="center">UP</td>
+   <td align="center">go down piece</td>
+  </tr>
+  <tr>
+   <td align="center">RIGHT</td>
+   <td align="center">move right piece</td>
+  </tr>
+  <tr>
+   <td align="center">LEFT</td>
+   <td align="center">move left piece</td>
+  </tr>
+  <tr>
+   <td align="center">SPACE</td>
+   <td align="center">place piece</td>
+  </tr>
+  <tr>
+   <td align="center">ESCAPE</td>
+   <td align="center">Pause / Resume</td>
+  </tr>
 
 <h1 align="center" id="releases"> Releases </h1> 
 
