@@ -9,7 +9,7 @@ Summary
 * **[Summary](summary)**
 * **[Features](features)**
 * **[Install](Install)**
-* **[Pre-requisites](Prerequisites)**
+* **[Pre-requisites](#Prerequisites)**
 * **[Releases](releases)**
 * **[Credits](credits)**
 
