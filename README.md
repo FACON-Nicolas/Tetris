@@ -17,4 +17,5 @@
 | ESCAPE | Pause / Resume |
 
 ## Versions and updates : 
-I don't know if I'll update the game in the future, but I think make a build for players.
+ + **1.0.0** : 2021-12-15
+ + **1.0.1** : march 2022 (soon)
