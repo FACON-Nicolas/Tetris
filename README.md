@@ -7,12 +7,22 @@ Summary
 </h1>
 
 * **[Summary](#summary)**
+* **[Credits](#credits)**
 * **[Features](#features)**
 * **[Install](#Install)**
 * **[Pre-requisites](#Prerequisites)**
 * **[Releases](#releases)**
-* **[Credits](#credits)**
+* **[Keys](#keys)**
 
+<h1 align="center" id="credits"> Credits </h1>
+
+* **[Facon Nicolas](https://github.com/FACON-Nicolas)** : creator of the project
+
+<h1 align="center" id="features">Features</h1>
+
+<h1 align="center" id="Install">Install</h1>
+
+<p align="center"> To install the Tetris project, <a href="#keys">click here</a><br/>The project is composed by 3 things: The game, a batch file that launchs game and an installer file that installs python and frameworks</p>
 
 <h1 align="center" id="Prerequisites">
 Pre-requisites
@@ -23,6 +33,11 @@ Pre-requisites
 + get python 3.7
 + get the lastest version of pygame ( ``py -3.7 -m pip install pygame`` )
 + get the lastest version of pygame_gui ( ``py -3.7 -m pip install pygame_gui`` )
+
+<h1 align="center" id="releases"> Releases </h1> 
+
+ + **1.0.0** : 2021-12-15
+ + **1.0.1** : march 2022 (soon)
 
 <h1 align="center" id="keys"> Keys </h1>
 
@@ -59,11 +74,3 @@ Pre-requisites
    <td align="center">Pause / Resume</td>
   </tr>
 
-<h1 align="center" id="releases"> Releases </h1> 
-
- + **1.0.0** : 2021-12-15
- + **1.0.1** : march 2022 (soon)
-
-<h1 align="center" id="credits"> Credits </h1>
-
-* **[Facon Nicolas](https://github.com/FACON-Nicolas)** : creator of the project
