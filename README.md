@@ -9,12 +9,16 @@ Summary
 * **[Summary](summary)**
 * **[Features](features)**
 * **[Install](Install)**
-* **[Prerequisites](Prerequisites)**
+* **[Pre-requisites](Prerequisites)**
 * **[Releases](releases)**
 * **[Credits](credits)**
 
 
-## Prerequisite :
+<h1 align="center" id="summary">
+Pre-requisites
+</h1>
+<p align="center"> A file nammed <code>Installer.bat</code> was created for that and install everything (except windows)</p>
+
 + possess Windows 10
 + get python 3.7
 + get the lastest version of pygame ( ``py -3.7 -m pip install pygame`` )
@@ -30,6 +34,11 @@ Summary
 | SPACE | place piece |
 | ESCAPE | Pause / Resume |
 
-## Versions and updates : 
+<h1 align="center" id="releases"> Releases </h1> 
+
  + **1.0.0** : 2021-12-15
  + **1.0.1** : march 2022 (soon)
+
+<h1 align="center" id="credits"> Credits </h1>
+
++ * **[Facon Nicolas](https://github.com/FACON-Nicolas)**
