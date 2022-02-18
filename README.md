@@ -2,6 +2,18 @@
 
 <p align="center"><img src="images/tetris.png" alt="" width="800"></p>
 
+<h1 align="center" id="summary">
+Summary
+</h1>
+
+* **[Summary](summary)**
+* **[Features](features)**
+* **[Install](Install)**
+* **[Prerequisites](Prerequisites)**
+* **[Releases](releases)**
+* **[Credits](credits)**
+
+
 ## Prerequisite :
 + possess Windows 10
 + get python 3.7
