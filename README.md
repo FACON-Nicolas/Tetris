@@ -14,7 +14,7 @@ Summary
 * **[Credits](credits)**
 
 
-<h1 align="center" id="summary">
+<h1 align="center" id="Prerequisites">
 Pre-requisites
 </h1>
 <p align="center"> A file nammed <code>Installer.bat</code> (launched automatically when you launch the game for the first time) was created for that and install everything (except windows)</p>
