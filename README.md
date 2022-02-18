@@ -1,4 +1,4 @@
-# Tetris
+# <p align="center">Tetris</p>
 
 ## Prerequisite :
 + possess Windows 10
