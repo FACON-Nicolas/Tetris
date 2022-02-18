@@ -43,7 +43,7 @@ Pre-requisites
 
 <h1 align="center" id="releases"> Releases </h1> 
 
- + **1.0.0** : 2021-12-15
+ + **1.0.0** : 2021-12-11
  + **1.0.1** : march 2022 (soon)
 
 <h1 align="center" id="keys"> Keys </h1>
