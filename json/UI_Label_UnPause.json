@@ -1,0 +1,10 @@
+{
+    "defaults": 
+    {
+        "colours": 
+        {
+            "normal_text": "#FFFFFF",
+            "dark_bg":"#282828"
+        }
+    }
+}

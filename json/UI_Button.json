@@ -1,0 +1,10 @@
+{
+    "defaults":
+    {
+        "colours":
+        {
+           "normal_bg":"#555555",
+           "border_bg" : "555555"
+        }
+    }
+}
