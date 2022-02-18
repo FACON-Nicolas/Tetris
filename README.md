@@ -1,5 +1,7 @@
 # <p align="center">Tetris</p>
 
+<p align="center"><img src="images/Tetris.png" alt="" width="800"></p>
+
 ## Prerequisite :
 + possess Windows 10
 + get python 3.7
