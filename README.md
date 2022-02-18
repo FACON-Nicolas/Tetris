@@ -22,7 +22,7 @@ Summary
 
 <h1 align="center" id="Install">Install</h1>
 
-<p align="center"> To install the Tetris project, <a href="#keys">click here</a><br/>The project is composed by 3 things: The game, a batch file that launchs game and an installer file that installs python and frameworks</p>
+<p align="center"> To install the Tetris project, <a href="https://github.com/FACON-Nicolas/Tetris/releases/tag/v1">click here</a><br/>The project is composed by 3 things: The game, a batch file that launchs game and an installer file that installs python and frameworks</p>
 
 <h1 align="center" id="Prerequisites">
 Pre-requisites
