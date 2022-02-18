@@ -6,12 +6,12 @@
 Summary
 </h1>
 
-* **[Summary](summary)**
-* **[Features](features)**
-* **[Install](Install)**
+* **[Summary](#summary)**
+* **[Features](#features)**
+* **[Install](#Install)**
 * **[Pre-requisites](#Prerequisites)**
-* **[Releases](releases)**
-* **[Credits](credits)**
+* **[Releases](#releases)**
+* **[Credits](#credits)**
 
 
 <h1 align="center" id="Prerequisites">
