@@ -24,7 +24,8 @@ Pre-requisites
 + get the lastest version of pygame ( ``py -3.7 -m pip install pygame`` )
 + get the lastest version of pygame_gui ( ``py -3.7 -m pip install pygame_gui`` )
 
-## Keys :
+<h1 align="center" id="keys"> Keys </h1>
+ 
 | Keys  | Actions |
 | ------|---------|
 | UP    | pivot piece |
