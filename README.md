@@ -41,4 +41,4 @@ Pre-requisites
 
 <h1 align="center" id="credits"> Credits </h1>
 
-+ * **[Facon Nicolas](https://github.com/FACON-Nicolas)**
+* **[Facon Nicolas](https://github.com/FACON-Nicolas)**
