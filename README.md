@@ -19,6 +19,13 @@ Summary
 * **[Facon Nicolas](https://github.com/FACON-Nicolas)** : creator of the project
 
 <h1 align="center" id="features">Features</h1>
+<p align="center">Game paused interface</p>
+ 
+<p align="center"><img src="images/paused.png" width="700"></p>
+ 
+<p align="center">Game over interface<br/></p>
+ 
+<p align="center"><img src="images/game_over.png" width="700"><br/></p>
 
 <h1 align="center" id="Install">Install</h1>
 
