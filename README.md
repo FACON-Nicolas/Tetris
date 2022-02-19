@@ -1,5 +1,7 @@
 # <p align="center">Tetris</p>
 
+<p align="center">This repository contains the source code of a Tetris' copy. You can also play to Tetris like your parents in the 80's !</p>
+
 <p align="center"><img src="images/tetris.png" alt="" width="800"></p>
 
 <h1 align="center" id="summary">
