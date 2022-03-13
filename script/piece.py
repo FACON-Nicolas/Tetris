@@ -1,46 +1,47 @@
+from cmath import sqrt
+import random
+from typing import List
+
+
 class Piece:
-    """ Classe utilisee pour initialiser la pièce d'un jeu Tetris """
-    def __init__(self, tableau):
-        """ initialisation de la classe piece
-        :param tableau :: piece de jeu affichee dans une matrice
-        :type tableau :: List[List[int]]
 
-        :warnings :: le tableau doit avoir une taille de 3x3 """
-        self.x = 0
-        self.y = 0
-        self.num_tableau = 0
-        self.tableau = tableau
+    row = 0
+    col = 0
 
-    def initialiser_position(self):
-        self.x, self.y = -1, 0
-        self.num_tableau = 0
+    def __init__(self, tab):
+        self.__tab = tab
+        self.__numTab = 0
 
-    def descendre(self):
-        """ procedure permettant de faire descendre 
-        la pièce du jeu actuellement en mouvement. 
-        :todo :: voir pour faire descendre le tableau """
-        self.y +=1
+    @staticmethod
+    def resetPos(row: int, col: int):
+        Piece.row, Piece.col = row, col
 
-    def gauche(self):
-        """ Procedure permettant à la piece en question d'aller
-        a gauche si elle remplit la condition de la fonction """
-        self.x = self.x - 1 if self.x > 0 else self.x
-    
-    def droite(self):
-        """ Procedure permettant à la piece en question d'aller
-        a droite si elle remplit la condition de la fonction """
-        self.x = self.x + 1 if self.x + 3 < 12 else self.x
+    def goToFinalPosition(self): pass
 
-    def pivoter_piece(self):
-        """ permet de passer au tableau suivant d'une piece permettant 
-        à la classe 'Affichage' de simuler un pivotement de la piece"""
-        self.num_tableau = (self.num_tableau + 1) % 4
+    @staticmethod 
+    def goLeft(): 
+        if Piece.col > 0: Piece.col -= 1
 
-    def get_num_tab(self):
-        return self.num_tableau
+    @staticmethod
+    def goRight(leng: int): 
+        if Piece.col < leng: Piece.col += 1
 
-    def get_tab(self):
-        return self.tableau
+    @staticmethod
+    def goDown():
+        Piece.row += 1
 
-    def get_tab_with_index(self):
-        return self.get_tab()[self.get_num_tab()]
+    def getNumTab(self):
+        return self.__numTab
+
+    def getTab(self):
+        return self.__tab
+
+    def getTabWithIndex(self):
+        return self.__tab[self.getNumTab()]
+
+    def getNextNumTab(self):
+        return (self.getNumTab()+1)%(len(self.__tab))
+
+    def pivotPiece(self):
+        self.__numTab = self.getNextNumTab()
+        print(self.__numTab)

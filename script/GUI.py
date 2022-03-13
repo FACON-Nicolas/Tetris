@@ -1,10 +1,9 @@
-import pygame_gui, pygame
-from Jeu import Jeu
+import pygame
+import pygame_gui
 
 class GUI_Infos:
     pygame.display.init()
     def __init__(self, longueur, largeur):    
-        self.jeu = Jeu()
         self.manager = pygame_gui.UIManager((longueur, largeur))
         self.pause_button = pygame_gui.elements.UIButton(
             relative_rect=pygame.Rect((-60, 15),(50, 50)),
@@ -42,7 +41,6 @@ class GUI_GameOver():
     """"""
     def __init__(self, longueur, largeur, joueur):
         """"""
-        self.jeu = Jeu()
         self.manager = pygame_gui.UIManager((longueur, largeur), 'json/UI_Label_Pause.json')
         self.scoreText = pygame_gui.elements.UILabel(
             relative_rect=pygame.Rect((550,150), (200, 75)),

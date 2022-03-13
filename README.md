@@ -1,3 +1,5 @@
+# <p align="center"> !! MAINTENANCE !! </p>
+
 # <p align="center">Tetris</p>
 
 <p align="center">This repository contains the source code of a Tetris' copy. You can also play to Tetris like your parents in the 80's !</p>
@@ -63,7 +65,7 @@ Pre-requisites
    <td align="center">rotate piece</td>
   </tr>
   <tr>
-   <td align="center">UP</td>
+   <td align="center">DOWN</td>
    <td align="center">go down piece</td>
   </tr>
   <tr>
@@ -82,4 +84,6 @@ Pre-requisites
    <td align="center">ESCAPE</td>
    <td align="center">Pause / Resume</td>
   </tr>
+</tbody>
+</table>
 
