@@ -27,7 +27,6 @@ class GUI_Pause(GUI_Infos):
 class GUI_UnPause(GUI_Infos):
     """"""
     def __init__(self, longueur, largeur,joueur):
-        """"""
         super().__init__(longueur, largeur)
         self.unpause_manager = pygame_gui.UIManager((longueur, largeur), 'json/UI_Label_UnPause.json')
         self.scoreText = pygame_gui.elements.UILabel(

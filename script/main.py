@@ -4,6 +4,7 @@ from pygame.locals import *
 from Display import Display
 from Color import Color
 from dataBase import DataBase
+from piece import Piece
 
 
 class Main:
@@ -35,17 +36,17 @@ class Main:
             self.controls()
             self.controlsPaused()
             self.controlsGameOver()
-            self.__screen.autoControl(self.__counter)
+            if not Main.isOver: self.__screen.autoControl(self.__counter)
             self.__screen.showPlatform()
+            self.isGameOver()
             Main.isKeyDown()
 
     def event(self):
         """ write docstrings """
         self.__clock.tick(60)
-        print('s: ', self.__speed)
         self.__counter = (self.__counter + 1) % self.__speed
         for event in pygame.event.get():
-            if event.type == QUIT: self.__isRunning = False
+            if event.type == QUIT: self.__isRunning=False
             elif event.type == KEYDOWN and event.key not in Main.keys: Main.keys.append(event.key)
             elif event.type == KEYUP and event.key in Main.keys: Main.keys.remove(event.key)
             elif event.type == VIDEOEXPOSE: self.__screen.setFullScreen()
@@ -53,28 +54,42 @@ class Main:
 
     def controls(self): 
         """ write docstrings """
-        if (not Main.keyIsDown and not Main.isPaused):
-            if Main.keys == [K_SPACE]: self.__screen.downPiece()
+        if (not Main.isOver and not Main.keyIsDown and not Main.isPaused):
+            if Main.keys == [K_ESCAPE]: pass                             #set the game paused
             elif Main.keys == [K_RIGHT]: self.__screen.moveRight()
             elif Main.keys == [K_LEFT]: self.__screen.moveLeft() 
             elif Main.keys == [K_UP]: self.__screen.pivot()    
-            elif Main.keys == [K_ESCAPE]: pass      # set the game paused
+            elif Main.keys == [K_SPACE]: 
+                self.__counter = 0
+                self.__screen.placePieceInItsFinalPos()
 
     def controlsPaused(self): 
         """ write docstrings """
         if (Main.isPaused and not Main.keyIsDown):
-            if Main.keys == [K_ESCAPE]: pass        #to set the game paused if the game is paused
+            if Main.keys == [K_ESCAPE]: pass
 
     def controlsGameOver(self):
         """ write docstrings """
         if (Main.isOver and not Main.keyIsDown): 
-            if Main.keys == [K_SPACE]: pass         #to play again
+            if Main.keys == [K_SPACE]: pass
 
     def setSpeed(self):
+        """ write docstrings """
         if Main.keys == [K_DOWN]: self.__speed = 3
         else: 
             score = 30 if self.__score > 30000 else self.__score // 1000
             self.__speed = 45 - score
+
+    def augmenterScore(self):
+        """ write docstrings """
+        self.__score += 1
+
+    def isGameOver(self):
+        """ write docstrings """
+        self.__screen.erasePiece()
+        Main.isOver =  ((Piece.col, Piece.row) == (Display.WIDTH_PLATFORM//2, 0) and \
+             not self.__screen.canPlacePiece(Piece.col, Piece.row))
+        self.__screen.placePiece(Piece.col, Piece.row)
 
 m=Main()
 m.run()

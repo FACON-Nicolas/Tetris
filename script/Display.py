@@ -52,6 +52,7 @@ class Display:
             for col in range(Display.WIDTH_PLATFORM)] for row in range(Display.HEIGHT_PLATFORM)]
 
     def drawColorCase(self, row: int , col: int, case: int):
+        """ write docstrings """
         color = Color.BLACK
         if case == 1: color = Color.GREY
         elif case == 2: color = Color.BLUE
@@ -80,10 +81,13 @@ class Display:
         return choice(self.listOfPieces())
 
     def changePiece(self):
+        """ write docstrings """
+        self.__piece.resetPos(0, Display.WIDTH_PLATFORM//2)
         self.__piece = self.__nextPiece
         self.__nextPiece = self.choiceNextPiece()
 
     def erasePiece(self):
+        """ write docstrings """
         for i in range(len(self.__piece.getTabWithIndex())):
             row = int(self.__piece.row+(i//sqrt(len(self.__piece.getTabWithIndex()))))
             col = int(self.__piece.col+(i%sqrt(len(self.__piece.getTabWithIndex()))))
@@ -91,10 +95,12 @@ class Display:
                 self.__platform[row][col] == self.__piece.getTabWithIndex()[i]: self.__platform[row][col] = 0
 
     def changeTopWall(self):
+        """ write docstrings """
         for i in range(1, Display.WIDTH_PLATFORM-1):
             self.__platform[0][i]=1 if self.__platform[0][i] == 0 else 0
 
     def placePiece(self, horizontalValue, verticalValue, piece=None):
+        """ write docstrings """
         if piece is None: piece = self.__piece.getTabWithIndex()
         if(self.canPlacePiece(horizontalValue, verticalValue)):
             for i in range(len(piece)):
@@ -103,6 +109,7 @@ class Display:
                 self.__platform[row][col] = self.__platform[row][col] if self.__platform[row][col] != 0 else piece[i]
 
     def canPlacePiece(self, horizontalValue: int, verticalValue: int, piece=None):
+        """ write docstrings """
         if piece is None: piece = self.__piece.getTabWithIndex()
         if verticalValue == 0: self.changeTopWall()
         for i in range(len(piece)):
@@ -115,49 +122,88 @@ class Display:
         return True
 
     def resizeGame(self, width: int, height=0):
+        """ write docstrings """
         Display.WIDTH_WINDOW = width
         Display.HEIGHT_WINDOW = height if height else int(width*0.66)-(int(width*0.66)%Display.HEIGHT_PLATFORM)
         Display.CASE_WIDTH = int(Display.HEIGHT_WINDOW/Display.HEIGHT_PLATFORM)
         self.__surface = pygame.display.set_mode((Display.WIDTH_WINDOW, Display.HEIGHT_WINDOW), pygame.RESIZABLE)
 
     def setFullScreen(self):
+        """ write docstrings """
         info = pygame.display.Info()
         self.resizeGame(info.current_w, info.current_h)
 
     def spawnPiece(self):
+        """ write docstrings """
         self.changePiece()
         self.__piece.resetPos(0, randint(0, Display.WIDTH_PLATFORM-(1+sqrt(len(self.__piece.getTabWithIndex())))))
         self.placePiece(Piece.col, Piece.row)
         
     def moveLeft(self):
+        """ write docstrings """
         self.erasePiece()
         if self.canPlacePiece(Piece.col-1, Piece.row): Piece.goLeft()
         self.placePiece(Piece.col, Piece.row)
 
     def moveRight(self):
+        """ write docstrings """
         self.erasePiece()
-        if self.canPlacePiece(Piece.col+1, Piece.row): 
+        if (Piece.col + sqrt(len(self.__piece.getTabWithIndex())) < Display.WIDTH_PLATFORM and self.canPlacePiece(Piece.col+1, Piece.row)):
             Piece.goRight(Display.WIDTH_PLATFORM - sqrt(len(self.__piece.getTabWithIndex())))
         self.placePiece(Piece.col, Piece.row)
 
     def pivot(self):
+        """ write docstrings """
         self.erasePiece()
         if self.canPlacePiece(Piece.col, Piece.row, self.__piece.getTab()[self.__piece.getNextNumTab()]): self.__piece.pivotPiece()
         self.placePiece(Piece.col, Piece.row)
 
     def downPiece(self):
+        """ write docstrings """
         self.erasePiece()
         if self.canPlacePiece(Piece.col, Piece.row+1): self.__piece.goDown()
         self.placePiece(Piece.col, Piece.row)
 
     def autoControl(self, counter: int):
+        """ write docstrings """
         if counter == 0: 
             self.erasePiece()
             if self.canPlacePiece(Piece.col, Piece.row+1):
                 self.downPiece()
             else:
                 self.placePiece(Piece.col, Piece.row)
+                self.updatePlatform()
                 self.changePiece()
 
+    def rowIsFull(self, index: int):
+        """ write docstrings """
+        assert(index in range(Display.HEIGHT_PLATFORM)), 'index not in range.'
+        return 0 not in self.__platform[index]
+    
+    def breakRow(self, index: int):
+        """ write docstrings """
+        self.__platform[index] = [1 if i in (0, Display.WIDTH_PLATFORM-1) else 0 for i in range(Display.WIDTH_PLATFORM)]
 
-        
+    def goDownRow(self, row):
+        """ write docstrings """
+        empty_row = [1 if i in (0, Display.WIDTH_PLATFORM-1) else 0 for i in range(Display.WIDTH_PLATFORM)]
+        if self.__platform[row] != empty_row and self.__platform[row+1] == empty_row:
+            while row > 1 and self.__platform[row+1] == empty_row:
+                self.__platform[row+1] = self.__platform[row].copy()
+                self.__platform[row] = empty_row.copy()
+                row -= 1
+
+    def updatePlatform(self):
+        """ write docstrings """
+        for i in range(1, Display.HEIGHT_PLATFORM-1):
+            if self.rowIsFull(i):
+                self.breakRow(i)
+                self.goDownRow(i-1)
+
+    def placePieceInItsFinalPos(self):
+        """ write docstrings """
+        self.erasePiece()
+        while(self.canPlacePiece(Piece.col, Piece.row+1)):
+            Piece.row+=1
+        self.placePiece(Piece.col, Piece.row)
+                
