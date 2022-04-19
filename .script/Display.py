@@ -40,6 +40,7 @@ class Display:
         """ TODO: write docstring """
         pygame.init()
         pygame.display.set_caption('Tetris')
+        self.__score = 0
         self.__surface = pygame.display.set_mode((Display.WIDTH_WINDOW, Display.HEIGHT_WINDOW), pygame.RESIZABLE)
         self.__platform = Display.initializePlatform()
         self.__piece = self.choiceNextPiece()
@@ -170,6 +171,7 @@ class Display:
             self.erasePiece()
             if self.canPlacePiece(Piece.col, Piece.row+1):
                 self.downPiece()
+                self.__score+=1
             else:
                 self.placePiece(Piece.col, Piece.row)
                 self.updatePlatform()
@@ -205,5 +207,10 @@ class Display:
         self.erasePiece()
         while(self.canPlacePiece(Piece.col, Piece.row+1)):
             Piece.row+=1
+            self.__score += 1
         self.placePiece(Piece.col, Piece.row)
                 
+    def getScore(self):
+        return self.__score
+
+    

@@ -4,8 +4,8 @@ import sqlite3
 
 class DataBase: 
 
-    path = os.path.expandvars(R'C:\Users\$USERNAME\Documents\Database-Tetris')
-    file = os.path.expandvars(R'C:\Users\$USERNAME\Documents\Database-Tetris\Table.db')
+    path = '.database'
+    file = '.database/Table.db'
 
     def __init__(self):
         """ TODO: Write docstrings """
@@ -60,8 +60,9 @@ class DataBase:
 
     def getHighScore(self):
         """ write docstrings """
-        return self.__cursor.execute("""SELECT MAX(score) 
+        data = self.__cursor.execute("""SELECT MAX(score) 
                                         FROM JOUEUR""")
+        return self.__cursor.fetchone()[0]
 
     def getBestPlayer(self):
         """ write docstrings """
