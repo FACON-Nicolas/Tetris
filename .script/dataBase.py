@@ -60,9 +60,11 @@ class DataBase:
 
     def getHighScore(self):
         """ write docstrings """
-        data = self.__cursor.execute("""SELECT MAX(score) 
-                                        FROM JOUEUR""")
-        return self.__cursor.fetchone()[0]
+        self.__cursor.execute("""SELECT MAX(score) 
+                                    FROM JOUEUR""")
+        data = self.__cursor.fetchone()[0]
+        if data is None: data = 0
+        return data
 
     def getBestPlayer(self):
         """ write docstrings """

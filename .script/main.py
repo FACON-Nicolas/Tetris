@@ -1,11 +1,12 @@
 import os
-from re import M
 import pygame
+import pygame_gui
 from pygame.locals import *
 from Display import Display
 from Color import Color
 from dataBase import DataBase
 from piece import Piece
+from audio import Sound
 
 
 class Main:
@@ -22,7 +23,7 @@ class Main:
         self.__clock = pygame.time.Clock()
         self.__counter = 0
         self.__speed = 45
-
+        self.__mixer = Sound()
 
     @staticmethod
     def isKeyDown():
@@ -41,7 +42,10 @@ class Main:
             if not Main.isPaused:
                 self.__screen.showPlatform()
                 self.isGameOver()
+            self.__screen.update_GUIs(Main.isOver, Main.isPaused)
             Main.isKeyDown()
+            pygame.display.flip()
+
 
     def event(self):
         """ write docstrings """
@@ -51,13 +55,17 @@ class Main:
             if event.type == QUIT: self.__isRunning=False
             elif event.type == KEYDOWN and event.key not in Main.keys: Main.keys.append(event.key)
             elif event.type == KEYUP and event.key in Main.keys: Main.keys.remove(event.key)
+            elif event.type == USEREVENT:
+                if event.user_type == pygame_gui.UI_BUTTON_PRESSED: 
+                    self.button_pressed(event)
             #elif event.type == VIDEOEXPOSE: self.__screen.setFullScreen()
             #elif event.type is VIDEORESIZE: self.__screen.resizeGame(event.w)
+            self.__screen.process_events_GUIs(event, Main.isOver, Main.isPaused)
 
     def controls(self): 
         """ write docstrings """
         if (not Main.isOver and not Main.keyIsDown and not Main.isPaused):
-            if Main.keys == [K_ESCAPE]: Main.isPaused = not Main.isPaused; Main.keys = []                 
+            if Main.keys == [K_ESCAPE]: Main.isPaused = not Main.isPaused; Main.keys = []; pygame.mixer.music.pause()         
             elif Main.keys == [K_RIGHT]: self.__screen.moveRight()
             elif Main.keys == [K_LEFT]: self.__screen.moveLeft() 
             elif Main.keys == [K_UP]: self.__screen.pivot()    
@@ -68,8 +76,10 @@ class Main:
     def controlsPaused(self): 
         """ write docstrings """
         if (Main.isPaused and not Main.keyIsDown):
-            if Main.keys == [K_ESCAPE]: Main.isPaused = not Main.isPaused
-
+            if Main.keys == [K_ESCAPE]:
+                Main.isPaused = not Main.isPaused
+                pygame.mixer.music.unpause()
+                 
     def controlsGameOver(self):
         """ write docstrings """
         if (Main.isOver and not Main.keyIsDown): 
@@ -79,7 +89,7 @@ class Main:
         """ write docstrings """
         if Main.keys == [K_DOWN]: self.__speed = 3
         else: 
-            score = 30 if self.__screen.getScore() > 30000 else self.__screen.getScore() // 1000
+            score = 30 if self.__screen.getScore() > 9000 else self.__screen.getScore() // 300
             self.__speed = 45 - score
 
     def augmenterScore(self):
@@ -93,12 +103,20 @@ class Main:
         Main.isOver = ((Piece.col, Piece.row) == (Display.WIDTH_PLATFORM//2, 0) and \
              not self.__screen.canPlacePiece(Piece.col, Piece.row))
         if (not over and Main.isOver) :
-            print('game added')
             Main.database.addGame(os.environ.get('USERNAME'), self.__screen.getScore())
         self.__screen.placePiece(Piece.col, Piece.row)
 
+    def button_pressed(self, e: pygame.event):
+        if e.ui_element in (self.__screen.getMain().pause_button, self.__screen.getPause().pause_button, self.__screen.getPause().resume_button): #pause_button is main pause button and paused pause button
+            if not Main.isPaused : 
+                pygame.mixer.music.pause()
+                Main.isPaused = True
+            else: 
+                pygame.mixer.music.unpause()
+                Main.isPaused = False
+        elif e.ui_element in (self.__screen.getPause().quit_button, self.__screen.getOver().quit_button):
+            self.__isRunning = False
+        elif e.ui_element == self.__screen.getOver().restart_button: self.__init__()
+
 m=Main()
 m.run()
-db = DataBase()
-for i in db.executeQuery('SELECT * FROM JOUEUR'):
-    print(i)

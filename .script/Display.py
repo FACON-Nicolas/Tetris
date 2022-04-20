@@ -4,7 +4,6 @@ from GUI import *
 from random import randint, choice
 from piece import Piece
 from math import sqrt
-from audio import sound
 from Color import Color
 from typing import List
 
@@ -19,6 +18,8 @@ class Display:
     HEIGHT_PLATFORM = 22
 
     CASE_WIDTH = 30
+
+    TIME_DELTA = 1
 
     I = [[0,2,0,0,2,0,0,2,0],[0,0,0,2,2,2,0,0,0],[0,2,0,0,2,0,0,2,0],[0,0,0,2,2,2,0,0,0]]
     T = [[0,0,0,4,4,4,0,4,0],[0,4,0,0,4,4,0,4,0],[0,4,0,4,4,4,0,0,0],[0,4,0,4,4,0,0,4,0]]
@@ -45,6 +46,9 @@ class Display:
         self.__platform = Display.initializePlatform()
         self.__piece = self.choiceNextPiece()
         self.__nextPiece = self.choiceNextPiece()
+        self.__MAIN_GUI = GUI_UnPause(Display.WIDTH_WINDOW, Display.HEIGHT_WINDOW, self)
+        self.__PAUSE_GUI = GUI_Pause(Display.WIDTH_WINDOW, Display.HEIGHT_WINDOW)
+        self.__OVER_GUI = GUI_GameOver(Display.WIDTH_WINDOW, Display.HEIGHT_WINDOW, self)
 
     @staticmethod
     def initializePlatform():
@@ -72,7 +76,6 @@ class Display:
         for row in range(len(self.__platform)):
             for col in range(len(self.__platform[0])):
                 self.drawColorCase(row, col, self.__platform[row][col])
-        pygame.display.flip()
 
     def listOfPieces(self):
         return [Display.P_I, Display.P_T, Display.P_L, Display.P_J, Display.P_Z, Display.P_S, Display.P_O]
@@ -209,8 +212,48 @@ class Display:
             Piece.row+=1
             self.__score += 1
         self.placePiece(Piece.col, Piece.row)
-                
+
+    def process_events_GUIs(self, e: pygame.event, isOver: bool=False, isPaused: bool=False):
+        """ write docstrings """
+        if isOver: 
+            self.__OVER_GUI.manager.process_events(e)
+        elif isPaused:
+            self.__PAUSE_GUI.pause_manager.process_events(e)
+            self.__PAUSE_GUI.manager.process_events(e)
+        else:
+            self.__MAIN_GUI.unpause_manager.process_events(e)
+            self.__MAIN_GUI.manager.process_events(e)
+
+    def update_GUIs(self, isOver: bool=False, isPaused: bool=False):
+
+        db = DataBase()
+
+        if isOver: 
+            self.__OVER_GUI.scoreText.set_text("score: " + str(self.__score))
+            self.__OVER_GUI.highScoreText.set_text("highScore: " + str(db.getHighScore()))
+            self.__OVER_GUI.manager.update(Display.TIME_DELTA)
+            self.__OVER_GUI.manager.draw_ui(self.__surface)
+        elif isPaused: 
+            self.__PAUSE_GUI.pause_manager.update(Display.TIME_DELTA)
+            self.__PAUSE_GUI.pause_manager.draw_ui(self.__surface)
+            self.__PAUSE_GUI.manager.draw_ui(self.__surface)
+            self.__PAUSE_GUI.manager.update(Display.TIME_DELTA)
+        else: 
+            self.__MAIN_GUI.scoreText.set_text("score: " + str(self.__score))
+            self.__MAIN_GUI.unpause_manager.update(Display.TIME_DELTA)
+            self.__MAIN_GUI.manager.update(Display.TIME_DELTA)
+            self.__MAIN_GUI.unpause_manager.draw_ui(self.__surface)
+            self.__MAIN_GUI.manager.draw_ui(self.__surface)
+
     def getScore(self):
         return self.__score
+        
+    def getMain(self):
+        return self.__MAIN_GUI
 
+    def getPause(self):
+        return self.__PAUSE_GUI
+
+    def getOver(self):
+        return self.__OVER_GUI
     
