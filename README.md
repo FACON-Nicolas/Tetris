@@ -1,5 +1,3 @@
-# <p align="center"> !! MAINTENANCE !! </p>
-
 # <p align="center">Tetris</p>
 
 <p align="center">This repository contains the source code of a Tetris' copy. You can also play to Tetris like your parents in the 80's !</p>
@@ -38,17 +36,14 @@ Summary
 <h1 align="center" id="Prerequisites">
 Pre-requisites
 </h1>
-<p align="center"> A file nammed <code>Installer.bat</code> (launched automatically when you launch the game for the first time) was created for that and install everything (except windows)</p>
 
-+ possess Windows 10
-+ get python 3.7
-+ get the lastest version of pygame ( ``py -3.7 -m pip install pygame`` )
-+ get the lastest version of pygame_gui ( ``py -3.7 -m pip install pygame_gui`` )
+ + **Windows**: python 3
+ + **linux**: nothing, use launch.sh.x
 
 <h1 align="center" id="releases"> Releases </h1> 
 
  + **1.0.0** : 2021-12-11
- + **1.0.1** : in development
+ + **1.0.1** : 2022-04-20
 
 <h1 align="center" id="keys"> Keys </h1>
 
@@ -86,4 +81,14 @@ Pre-requisites
   </tr>
 </tbody>
 </table>
+
+# <p align="center">Updates</p>
+
+## <p align="center">1.0.1</p>
+
+  + fix bugs
+  + upgrade the OOP and code
+  + make a multiplatform game
+
+
 
