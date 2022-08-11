@@ -1,12 +1,16 @@
+#
+
 # <p align="center">Tetris</p>
 
-<p align="center">This repository contains the source code of a Tetris' copy. You can also play to Tetris like your parents in the 80's !</p>
+<p align="center">This repository contains the source code of a Tetris' copy. Good Game !</p>
 
-<p align="center"><img src="images/tetris.png" alt="" width="800"></p>
+<p align="center">💩 <b>the framework pygame_gui used here is very shitty, it's likely the reason of some bugs.</b> 💩 </p>
 
-<h1 align="center" id="summary">
-Summary
-</h1>
+<p align="center"><img src="https://raw.githubusercontent.com/FACON-Nicolas/FACON-Nicolas/main/resources/tetris.gif" alt="" width="600"></p>
+
+#
+
+# <p align="center">Summary</p>
 
 * **[Summary](#summary)**
 * **[Credits](#credits)**
@@ -16,36 +20,67 @@ Summary
 * **[Releases](#releases)**
 * **[Keys](#keys)**
 
-<h1 align="center" id="credits"> Credits </h1>
+#
+
+# <p align="center"> Credits </p>
 
 * **[Facon Nicolas](https://github.com/FACON-Nicolas)** : creator of the project
 
-<h1 align="center" id="features">Features</h1>
+#
+
+# <p align="center">Features</p>
+
 <p align="center">Game paused interface</p>
  
-<p align="center"><img src="images/paused.png" width="700"></p>
+<p align="center"><img src="images/paused.png" width="600"></p>
  
 <p align="center">Game over interface<br/></p>
  
-<p align="center"><img src="images/game_over.png" width="700"><br/></p>
+<p align="center"><img src="images/game_over.png" width="600"><br/></p>
 
-<h1 align="center" id="Install">Install</h1>
+#
 
-<p align="center"> To install the Tetris project, <a href="https://github.com/FACON-Nicolas/Tetris/releases">click here</a><br/>The project is composed by 3 things: The game, a batch file that launchs game and an installer file that installs python and frameworks</p>
+# <p align="center"> Pre-requisites </p>
 
-<h1 align="center" id="Prerequisites">
-Pre-requisites
-</h1>
+ + Windows
+    - **[Python](https://www.python.org/downloads/)**
+    - **[Git Bash](https://gitforwindows.org/)**
+    - **pygame** (``py -3.8 -m pip install pygame`` in your terminal)
+    - **pygame_gui** (``py -3.8 -m pip install pygame_gui`` in your terminal)
 
- + **Windows**: python 3
- + **linux**: nothing, use launch.sh.x
+ + Linux:
+ 
+    write this in terminal 
+    ```sh
+    #if python is not installed yet.
+    sudo apt install python3.8
 
-<h1 align="center" id="releases"> Releases </h1> 
+    #if pygame is not installed yet.
+    pip install pygame
+
+    #if pygame_gui is not installed yet.
+    pip install pygame_gui
+    ```
+
+#
+
+# <p align="center" >Install</p>
+
+```sh
+git clone https://github.com/FACON-Nicolas/Tetris
+cd Tetris/
+#python3 or py on windows
+python3 .script/main.py
+```
+
+# <p align="center"> Releases </p> 
 
  + **1.0.0** : 2021-12-11
  + **1.0.1** : 2022-04-20
 
-<h1 align="center" id="keys"> Keys </h1>
+#
+
+# <p align="center"> Keys </p>
 
 <table align="center">
  <thead>
@@ -82,9 +117,11 @@ Pre-requisites
 </tbody>
 </table>
 
+#
+
 # <p align="center">Updates</p>
 
-## <p align="center">1.0.1</p>
+## 1.0.1
 
   + fix bugs
   + upgrade the OOP and code
