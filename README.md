@@ -23,7 +23,7 @@
 
 #
 
-# <p align="center"> Credits </p>
+# <p align="center">Credits</p>
 
 * **[Facon Nicolas](https://github.com/FACON-Nicolas)** : creator of the project
 
@@ -41,7 +41,7 @@
 
 #
 
-# <p align="center"> Pre-requisites </p>
+# <p align="center">Pre-requisites</p>
 
  + Windows
     - **[Python](https://www.python.org/downloads/)**
@@ -74,14 +74,14 @@ cd Tetris/
 python3 .script/main.py
 ```
 
-# <p align="center"> Releases </p> 
+# <p align="center">Releases</p> 
 
  + **1.0.0** : 2021-12-11
  + **1.0.1** : 2022-04-20
 
 #
 
-# <p align="center"> Keys </p>
+# <p align="center">Keys</p>
 
 <table align="center">
  <thead>
