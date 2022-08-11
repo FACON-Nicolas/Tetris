@@ -12,13 +12,14 @@
 
 # <p align="center">Summary</p>
 
-* **[Summary](#summary)**
-* **[Credits](#credits)**
-* **[Features](#features)**
+* **[Summary](#Summary)**
+* **[Credits](#Credits)**
+* **[Features](#Features)**
 * **[Install](#Install)**
-* **[Pre-requisites](#Prerequisites)**
-* **[Releases](#releases)**
-* **[Keys](#keys)**
+* **[Pre-requisites](#Pre-requisites)**
+* **[Releases](#Releases)**
+* **[Keys](#Keys)**
+* **[Updates](#Updates)**
 
 #
 
